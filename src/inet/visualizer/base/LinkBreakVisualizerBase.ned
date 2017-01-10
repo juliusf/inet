@@ -38,6 +38,6 @@ simple LinkBreakVisualizerBase extends VisualizerBase
         double iconTintAmount = default(0);
         string iconTintColor = default("");
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive link breaks fade out
-        double fadeOutHalfLife @unit(s) = default(1s); // how quickly link breaks fade away, opacity halves every second by default
+        double fadeOutTime @unit(s) = default(1s); // how quickly link breaks fade away, 1 second by default
         @class(LinkBreakVisualizerBase);
 }

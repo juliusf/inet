@@ -31,7 +31,7 @@ void VisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         const char *path = par("visualizerTargetModule");
-        visualizerTargetModule = *path == '\0' ? getSystemModule() : getModuleByPath(path);
+        visualizerTargetModule = getModuleByPath(path);
         if (visualizerTargetModule == nullptr)
             throw cRuntimeError("Module not found on path '%s' defined by par 'visualizerTargetModule'", path);
     }

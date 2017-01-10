@@ -45,6 +45,6 @@ simple LinkVisualizerBase extends VisualizerBase
         double lineContactSpacing = default(3); // spacing between arrow end and submodule icon
         string lineContactMode @enum("circular", "rectangular") = default("rectangular"); // determines how arrows are clipped at the submodules
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive links fade out
-        double fadeOutHalfLife @unit(s) = default(1s); // how quickly inactive links fade away, opacity halves every second by default
+        double fadeOutTime @unit(s) = default(1s); // how quickly inactive links fade away, 1 second by default
         @class(LinkVisualizerBase);
 }

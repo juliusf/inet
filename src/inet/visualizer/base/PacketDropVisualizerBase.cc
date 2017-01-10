@@ -63,7 +63,7 @@ void PacketDropVisualizerBase::initialize(int stage)
         if (iconTintAmount != 0)
             iconTintColor = cFigure::Color(par("iconTintColor"));
         fadeOutMode = par("fadeOutMode");
-        fadeOutHalfLife = par("fadeOutHalfLife");
+        fadeOutTime = par("fadeOutTime");
     }
 }
 
@@ -81,11 +81,10 @@ void PacketDropVisualizerBase::refreshDisplay() const
             delta = currentAnimationPosition.getRealTime() - packetDrop->packetDropAnimationPosition.getRealTime();
         else
             throw cRuntimeError("Unknown fadeOutMode: %s", fadeOutMode);
-        auto alpha = std::min(1.0, std::pow(2.0, -delta / fadeOutHalfLife));
-        if (alpha < 0.01)
+        if (delta > fadeOutTime)
             removedPacketDropVisualizations.push_back(packetDrop);
         else
-            setAlpha(packetDrop, alpha);
+            setAlpha(packetDrop, (1 - delta) / fadeOutTime);
     }
     for (auto packetDrop : removedPacketDropVisualizations) {
         const_cast<PacketDropVisualizerBase *>(this)->removePacketDropVisualization(packetDrop);

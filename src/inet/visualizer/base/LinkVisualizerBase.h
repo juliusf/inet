@@ -53,7 +53,7 @@ class INET_API LinkVisualizerBase : public VisualizerBase, public cListener
     double lineContactSpacing = NaN;
     const char *lineContactMode = nullptr;
     const char *fadeOutMode = nullptr;
-    double fadeOutHalfLife = NaN;
+    double fadeOutTime = NaN;
     //@}
 
     LineManager *lineManager = nullptr;

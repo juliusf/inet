@@ -53,7 +53,7 @@ class INET_API TracingObstacleLossVisualizerBase : public VisualizerBase, public
     cFigure::LineStyle faceNormalLineStyle;
     double faceNormalLineWidth = NaN;
     const char *fadeOutMode = nullptr;
-    double fadeOutHalfLife = NaN;
+    double fadeOutTime = NaN;
     //@}
 
     std::vector<const ObstacleLossVisualization *> obstacleLossVisualizations;

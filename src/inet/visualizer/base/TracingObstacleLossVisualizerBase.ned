@@ -37,6 +37,6 @@ simple TracingObstacleLossVisualizerBase extends VisualizerBase
         string faceNormalLineStyle = default("solid");
         double faceNormalLineWidth = default(1);
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive obstacle losses fade out
-        double fadeOutHalfLife @unit(s) = default(1s); // how quickly link breaks fade away, opacity halves every second by default
+        double fadeOutTime @unit(s) = default(1s); // how quickly link breaks fade away, 1 second by default
         @class(TracingObstacleLossVisualizerBase);
 }

@@ -50,7 +50,7 @@ class INET_API LinkBreakVisualizerBase : public VisualizerBase, public cListener
     double iconTintAmount = NaN;
     cFigure::Color iconTintColor;
     const char *fadeOutMode = nullptr;
-    double fadeOutHalfLife = NaN;
+    double fadeOutTime = NaN;
     //@}
 
     std::map<std::pair<int, int>, const LinkBreakVisualization *> linkBreakVisualizations;

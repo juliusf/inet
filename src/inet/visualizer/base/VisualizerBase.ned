@@ -24,7 +24,7 @@ package inet.visualizer.base;
 simple VisualizerBase
 {
     parameters:
-        string visualizerTargetModule = default(""); // module path relative to the visualizer where the visualization should appear in the user interface, root module by default
+        string visualizerTargetModule = default("<root>"); // module path relative to the visualizer where the visualization should appear in the user interface, root module by default
         @class(VisualizerBase);
         @display("i=block/app_s");
 }

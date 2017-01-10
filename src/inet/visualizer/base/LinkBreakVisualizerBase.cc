@@ -55,7 +55,7 @@ void LinkBreakVisualizerBase::initialize(int stage)
         if (iconTintAmount != 0)
             iconTintColor = cFigure::Color(par("iconTintColor"));
         fadeOutMode = par("fadeOutMode");
-        fadeOutHalfLife = par("fadeOutHalfLife");
+        fadeOutTime = par("fadeOutTime");
     }
 }
 
@@ -74,11 +74,10 @@ void LinkBreakVisualizerBase::refreshDisplay() const
             delta = currentAnimationPosition.getRealTime() - linkBreakVisualization->linkBreakAnimationPosition.getRealTime();
         else
             throw cRuntimeError("Unknown fadeOutMode: %s", fadeOutMode);
-        auto alpha = std::min(1.0, std::pow(2.0, -delta / fadeOutHalfLife));
-        if (alpha < 0.01)
+        if (delta > fadeOutTime)
             removedLinkBreakVisualizations.push_back(linkBreakVisualization);
         else
-            setAlpha(linkBreakVisualization, alpha);
+            setAlpha(linkBreakVisualization, (1 - delta) / fadeOutTime);
     }
     for (auto linkBreakVisualization : removedLinkBreakVisualizations) {
         const_cast<LinkBreakVisualizerBase *>(this)->removeLinkBreakVisualization(linkBreakVisualization);

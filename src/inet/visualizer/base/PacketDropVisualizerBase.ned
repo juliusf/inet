@@ -39,6 +39,6 @@ simple PacketDropVisualizerBase extends VisualizerBase
         double iconTintAmount = default(0); // colorization amount between 0 and 1, disabled by default
         string iconTintColor = default(""); // color for icon tinting, disabled by default
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive packet drops fade out
-        double fadeOutHalfLife @unit(s) = default(1s); // how quickly packet drops fade away, opacity halves every second by default
+        double fadeOutTime @unit(s) = default(1s); // how quickly packet drops fade away, 1 second by default
         @class(PacketDropVisualizerBase);
 }

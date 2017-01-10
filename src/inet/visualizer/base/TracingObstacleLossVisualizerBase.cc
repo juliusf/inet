@@ -49,7 +49,7 @@ void TracingObstacleLossVisualizerBase::initialize(int stage)
         faceNormalLineStyle = cFigure::parseLineStyle(par("faceNormalLineStyle"));
         faceNormalLineWidth = par("faceNormalLineWidth");
         fadeOutMode = par("fadeOutMode");
-        fadeOutHalfLife = par("fadeOutHalfLife");
+        fadeOutTime = par("fadeOutTime");
     }
 }
 
@@ -67,11 +67,10 @@ void TracingObstacleLossVisualizerBase::refreshDisplay() const
             delta = currentAnimationPosition.getRealTime() - obstacleLossVisualization->obstacleLossAnimationPosition.getRealTime();
         else
             throw cRuntimeError("Unknown fadeOutMode: %s", fadeOutMode);
-        auto alpha = std::min(1.0, std::pow(2.0, -delta / fadeOutHalfLife));
-        if (alpha < 0.01)
+        if (delta > fadeOutTime)
             removedObstacleLossVisualizations.push_back(obstacleLossVisualization);
         else
-            setAlpha(obstacleLossVisualization, alpha);
+            setAlpha(obstacleLossVisualization, (1 - delta) / fadeOutTime);
     }
     for (auto obstacleLossVisualization : removedObstacleLossVisualizations) {
         const_cast<TracingObstacleLossVisualizerBase *>(this)->removeObstacleLossVisualization(obstacleLossVisualization);

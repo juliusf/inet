@@ -50,7 +50,7 @@ class INET_API PacketDropVisualizerBase : public VisualizerBase, public cListene
     cFigure::Color iconTintColor;
     double iconTintAmount = NaN;
     const char *fadeOutMode = nullptr;
-    double fadeOutHalfLife = NaN;
+    double fadeOutTime = NaN;
     //@}
 
     std::vector<const PacketDropVisualization *> packetDropVisualizations;

@@ -59,7 +59,7 @@ void PathVisualizerBase::initialize(int stage)
         lineContactSpacing = par("lineContactSpacing");
         lineContactMode = par("lineContactMode");
         fadeOutMode = par("fadeOutMode");
-        fadeOutHalfLife = par("fadeOutHalfLife");
+        fadeOutTime = par("fadeOutTime");
         lineManager = LineManager::getLineManager(visualizerTargetModule->getCanvas());
     }
 }
@@ -79,11 +79,10 @@ void PathVisualizerBase::refreshDisplay() const
             delta = currentAnimationPosition.getRealTime() - pathVisualization->lastUsageAnimationPosition.getRealTime();
         else
             throw cRuntimeError("Unknown fadeOutMode: %s", fadeOutMode);
-        auto alpha = std::min(1.0, std::pow(2.0, -delta / fadeOutHalfLife));
-        if (alpha < 0.01)
+        if (delta > fadeOutTime)
             removedPathVisualizations.push_back(pathVisualization);
         else
-            setAlpha(pathVisualization, alpha);
+            setAlpha(pathVisualization, (1 - delta) / fadeOutTime);
     }
     for (auto path : removedPathVisualizations) {
         auto sourceAndDestination = std::pair<int, int>(path->moduleIds.front(), path->moduleIds.back());

@@ -56,7 +56,7 @@ void LinkVisualizerBase::initialize(int stage)
         lineContactSpacing = par("lineContactSpacing");
         lineContactMode = par("lineContactMode");
         fadeOutMode = par("fadeOutMode");
-        fadeOutHalfLife = par("fadeOutHalfLife");
+        fadeOutTime = par("fadeOutTime");
         lineManager = LineManager::getLineManager(visualizerTargetModule->getCanvas());
     }
 }
@@ -76,11 +76,10 @@ void LinkVisualizerBase::refreshDisplay() const
             delta = currentAnimationPosition.getRealTime() - linkVisualization->lastUsageAnimationPosition.getRealTime();
         else
             throw cRuntimeError("Unknown fadeOutMode: %s", fadeOutMode);
-        auto alpha = std::min(1.0, std::pow(2.0, -delta / fadeOutHalfLife));
-        if (alpha < 0.01)
+        if (delta > fadeOutTime)
             removedLinkVisualizations.push_back(linkVisualization);
         else
-            setAlpha(linkVisualization, alpha);
+            setAlpha(linkVisualization, (1 - delta) / fadeOutTime);
     }
     for (auto linkVisualization : removedLinkVisualizations) {
         const_cast<LinkVisualizerBase *>(this)->removeLinkVisualization(linkVisualization);
