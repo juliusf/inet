@@ -44,6 +44,14 @@ LinkOsgVisualizerBase::LinkOsgVisualization::~LinkOsgVisualization()
     // TODO: delete node;
 }
 
+
+void LinkOsgVisualizerBase::refreshDisplay() const
+{
+    LinkVisualizerBase::refreshDisplay();
+    // TODO: switch to osg canvas when API is extended
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(linkVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
+}
+
 const LinkVisualizerBase::LinkVisualization *LinkOsgVisualizerBase::createLinkVisualization(cModule *source, cModule *destination) const
 {
     auto sourcePosition = getPosition(source);

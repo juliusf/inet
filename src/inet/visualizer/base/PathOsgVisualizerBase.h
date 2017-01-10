@@ -39,6 +39,8 @@ class INET_API PathOsgVisualizerBase : public PathVisualizerBase
     };
 
   protected:
+    virtual void refreshDisplay() const override;
+
     virtual const PathVisualization *createPathVisualization(const std::vector<int>& path) const override;
     virtual void addPathVisualization(std::pair<int, int> sourceAndDestination, const PathVisualization *pathVisualization) override;
     virtual void removePathVisualization(std::pair<int, int> sourceAndDestination, const PathVisualization *pathVisualization) override;

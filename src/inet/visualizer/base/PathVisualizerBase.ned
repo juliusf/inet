@@ -55,5 +55,6 @@ simple PathVisualizerBase extends VisualizerBase
         string lineContactMode @enum("circular", "rectangular") = default("rectangular"); // determines how arrows are clipped at the submodules
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive paths fade out
         double fadeOutTime @unit(s) = default(1s); // how quickly inactive routes fade away, 1 second by default
+        double fadeOutAnimationSpeed = default(0); // animation speed while the there are active routes, value must be in the range (0, +inf)
         @class(PathVisualizerBase);
 }

@@ -60,6 +60,7 @@ void PathVisualizerBase::initialize(int stage)
         lineContactMode = par("lineContactMode");
         fadeOutMode = par("fadeOutMode");
         fadeOutTime = par("fadeOutTime");
+        fadeOutAnimationSpeed = par("fadeOutAnimationSpeed");
         lineManager = LineManager::getLineManager(visualizerTargetModule->getCanvas());
     }
 }

@@ -22,6 +22,7 @@
 #include "inet/visualizer/base/VisualizerBase.h"
 #include "inet/visualizer/common/AnimationPosition.h"
 #include "inet/visualizer/common/LineManager.h"
+#include "inet/visualizer/common/NetworkNodeFilter.h"
 #include "inet/visualizer/common/PacketFilter.h"
 
 namespace inet {
@@ -44,6 +45,7 @@ class INET_API LinkVisualizerBase : public VisualizerBase, public cListener
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    NetworkNodeFilter nodeFilter;
     PacketFilter packetFilter;
     cFigure::Color lineColor;
     cFigure::LineStyle lineStyle;
@@ -54,6 +56,7 @@ class INET_API LinkVisualizerBase : public VisualizerBase, public cListener
     const char *lineContactMode = nullptr;
     const char *fadeOutMode = nullptr;
     double fadeOutTime = NaN;
+    double fadeOutAnimationSpeed = NaN;
     //@}
 
     LineManager *lineManager = nullptr;

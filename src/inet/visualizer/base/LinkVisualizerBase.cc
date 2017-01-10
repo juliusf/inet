@@ -47,6 +47,7 @@ void LinkVisualizerBase::initialize(int stage)
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
         subscriptionModule->subscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
         subscriptionModule->subscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
+        nodeFilter.setPattern(par("nodeFilter"));
         packetFilter.setPattern(par("packetFilter"));
         lineColor = cFigure::Color(par("lineColor"));
         lineStyle = cFigure::parseLineStyle(par("lineStyle"));
@@ -57,6 +58,7 @@ void LinkVisualizerBase::initialize(int stage)
         lineContactMode = par("lineContactMode");
         fadeOutMode = par("fadeOutMode");
         fadeOutTime = par("fadeOutTime");
+        fadeOutAnimationSpeed = par("fadeOutAnimationSpeed");
         lineManager = LineManager::getLineManager(visualizerTargetModule->getCanvas());
     }
 }
@@ -140,20 +142,22 @@ void LinkVisualizerBase::receiveSignal(cComponent *source, simsignal_t signal, c
     Enter_Method_Silent();
     if (signal == LayeredProtocolBase::packetReceivedFromUpperSignal) {
         if (isLinkEnd(static_cast<cModule *>(source))) {
+            auto module = check_and_cast<cModule *>(source);
+            auto networkNode = getContainingNode(module);
             auto packet = check_and_cast<cPacket *>(object);
-            if (packetFilter.matches(packet)) {
+            if (nodeFilter.matches(networkNode) && packetFilter.matches(packet)) {
                 auto treeId = packet->getTreeId();
-                auto module = check_and_cast<cModule *>(source);
                 setLastModule(treeId, module);
             }
         }
     }
     else if (signal == LayeredProtocolBase::packetSentToUpperSignal) {
         if (isLinkEnd(static_cast<cModule *>(source))) {
+            auto module = check_and_cast<cModule *>(source);
+            auto networkNode = getContainingNode(module);
             auto packet = check_and_cast<cPacket *>(object);
-            if (packetFilter.matches(packet)) {
+            if (nodeFilter.matches(networkNode) && packetFilter.matches(packet)) {
                 auto treeId = packet->getTreeId();
-                auto module = check_and_cast<cModule *>(source);
                 auto lastModule = getLastModule(treeId);
                 if (lastModule != nullptr) {
                     updateLinkVisualization(getContainingNode(lastModule), getContainingNode(module));

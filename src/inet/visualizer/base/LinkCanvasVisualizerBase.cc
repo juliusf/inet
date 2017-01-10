@@ -66,6 +66,7 @@ void LinkCanvasVisualizerBase::refreshDisplay() const
         figure->setStart(canvasProjection->computeCanvasPoint(sourcePosition + shift));
         figure->setEnd(canvasProjection->computeCanvasPoint(destinationPosition + shift));
     }
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(linkVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
 }
 
 const LinkVisualizerBase::LinkVisualization *LinkCanvasVisualizerBase::createLinkVisualization(cModule *source, cModule *destination) const

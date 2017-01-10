@@ -54,6 +54,7 @@ class INET_API PathVisualizerBase : public VisualizerBase, public cListener
     const char *lineContactMode = nullptr;
     const char *fadeOutMode = nullptr;
     double fadeOutTime = NaN;
+    double fadeOutAnimationSpeed = NaN;
     //@}
 
     LineManager *lineManager = nullptr;

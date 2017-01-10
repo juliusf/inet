@@ -36,6 +36,7 @@ simple LinkVisualizerBase extends VisualizerBase
 {
     parameters:
         string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for signals, root module by default
+        string nodeFilter = default(""); // which nodes are considered to determine active links, matches no nodes by default
         string packetFilter = default(""); // which packets are considered to determine active links, matches no packets by default
         string lineColor = default("black"); // link arrow color, black by default
         string lineStyle = default("solid"); // link arrow style (solid, dashed, dotted)
@@ -46,5 +47,6 @@ simple LinkVisualizerBase extends VisualizerBase
         string lineContactMode @enum("circular", "rectangular") = default("rectangular"); // determines how arrows are clipped at the submodules
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive links fade out
         double fadeOutTime @unit(s) = default(1s); // how quickly inactive links fade away, 1 second by default
+        double fadeOutAnimationSpeed = default(0); // animation speed while the there are active links, value must be in the range (0, +inf)
         @class(LinkVisualizerBase);
 }

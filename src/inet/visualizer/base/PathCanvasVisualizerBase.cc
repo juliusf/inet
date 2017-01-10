@@ -104,6 +104,7 @@ void PathCanvasVisualizerBase::refreshDisplay() const
         }
         pathCanvasVisualization->figure->setPoints(points);
     }
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(pathVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
 }
 
 const PathVisualizerBase::PathVisualization *PathCanvasVisualizerBase::createPathVisualization(const std::vector<int>& path) const

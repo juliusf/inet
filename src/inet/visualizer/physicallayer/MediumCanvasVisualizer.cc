@@ -110,7 +110,6 @@ void MediumCanvasVisualizer::setAnimationSpeed() const
         }
     }
     animationSpeed = animationSpeed == DBL_MAX ? 0 : animationSpeed;
-    // TODO: switch to osg canvas when API is extended
     visualizerTargetModule->getCanvas()->setAnimationSpeed(animationSpeed, this);
 }
 

@@ -12,7 +12,6 @@
  - PhysicalLinkVisualizer nyilai nem látszanak rendesen, indulhatnának a source node szélétől, mehetnének a destination node széléig, nem a közepéig
 
 Generic:
- - change fadeout to be linear in time
  - add animation speed parameters to all visualizers
  - add filter parameters to all visualizers
  

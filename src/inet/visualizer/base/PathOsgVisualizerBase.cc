@@ -43,20 +43,11 @@ PathOsgVisualizerBase::PathOsgVisualization::~PathOsgVisualization()
     // TODO: delete node;
 }
 
-void PathOsgVisualizerBase::addPathVisualization(std::pair<int, int> sourceAndDestination, const PathVisualization *pathVisualization)
+void PathOsgVisualizerBase::refreshDisplay() const
 {
-    PathVisualizerBase::addPathVisualization(sourceAndDestination, pathVisualization);
-    auto pathOsgVisualization = static_cast<const PathOsgVisualization *>(pathVisualization);
-    auto scene = inet::osg::TopLevelScene::getSimulationScene(visualizerTargetModule);
-    scene->addChild(pathOsgVisualization->node);
-}
-
-void PathOsgVisualizerBase::removePathVisualization(std::pair<int, int> sourceAndDestination, const PathVisualization *pathVisualization)
-{
-    PathVisualizerBase::removePathVisualization(sourceAndDestination, pathVisualization);
-    auto pathOsgVisualization = static_cast<const PathOsgVisualization *>(pathVisualization);
-    auto node = pathOsgVisualization->node;
-    node->getParent(0)->removeChild(node);
+    PathVisualizerBase::refreshDisplay();
+    // TODO: switch to osg canvas when API is extended
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(pathVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
 }
 
 const PathVisualizerBase::PathVisualization *PathOsgVisualizerBase::createPathVisualization(const std::vector<int>& path) const
@@ -74,6 +65,22 @@ const PathVisualizerBase::PathVisualization *PathOsgVisualizerBase::createPathVi
         color = lineColor;
     node->setStateSet(inet::osg::createLineStateSet(color, lineStyle, lineWidth));
     return new PathOsgVisualization(path, node);
+}
+
+void PathOsgVisualizerBase::addPathVisualization(std::pair<int, int> sourceAndDestination, const PathVisualization *pathVisualization)
+{
+    PathVisualizerBase::addPathVisualization(sourceAndDestination, pathVisualization);
+    auto pathOsgVisualization = static_cast<const PathOsgVisualization *>(pathVisualization);
+    auto scene = inet::osg::TopLevelScene::getSimulationScene(visualizerTargetModule);
+    scene->addChild(pathOsgVisualization->node);
+}
+
+void PathOsgVisualizerBase::removePathVisualization(std::pair<int, int> sourceAndDestination, const PathVisualization *pathVisualization)
+{
+    PathVisualizerBase::removePathVisualization(sourceAndDestination, pathVisualization);
+    auto pathOsgVisualization = static_cast<const PathOsgVisualization *>(pathVisualization);
+    auto node = pathOsgVisualization->node;
+    node->getParent(0)->removeChild(node);
 }
 
 void PathOsgVisualizerBase::setAlpha(const PathVisualization *pathVisualization, double alpha) const
