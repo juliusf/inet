@@ -33,13 +33,19 @@ simple RoutingTableVisualizerBase extends VisualizerBase
 {
     parameters:
         string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for routing table signals, root module by default
+
         string destinationFilter = default(""); // which destinations are considered, matches no destinations by default
+        string nodeFilter = default("**"); // which nodes are considered, matches all nodes by default
+
         string lineColor = default("black"); // route line color, black by default
         string lineStyle = default("solid"); // route line style (solid, dashed, dotted)
         double lineWidth = default(2); // route line width
+
         double lineShift = default(10); // line shift to avoid overlapping lines
         string lineShiftMode = default("normal"); // determines how overlapping lines are shifted, possible values are: none, normal, x, y, z; optional prefix + or -
+
         double lineContactSpacing = default(3); // spacing between arrow end and submodule icon
         string lineContactMode @enum("circular", "rectangular") = default("rectangular"); // determines how arrows are clipped at the submodules
+
         @class(RoutingTableVisualizerBase);
 }

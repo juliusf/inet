@@ -76,7 +76,6 @@ void InterfaceTableCanvasVisualizer::refreshInterfaceVisualization(const Interfa
     interfaceCanvasVisualization->figure->setText(getVisualizationText(interfaceEntry).c_str());
 }
 
-
 } // namespace visualizer
 
 } // namespace inet

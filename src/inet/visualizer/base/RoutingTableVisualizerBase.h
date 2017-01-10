@@ -45,7 +45,8 @@ class INET_API RoutingTableVisualizerBase : public VisualizerBase, public cListe
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
-    NetworkNodeFilter destinationMatcher;
+    NetworkNodeFilter destinationFilter;
+    NetworkNodeFilter nodeFilter;
     cFigure::Color lineColor;
     cFigure::LineStyle lineStyle;
     double lineShift = NaN;

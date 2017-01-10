@@ -34,12 +34,16 @@ simple InterfaceTableVisualizerBase extends VisualizerBase
     parameters:
         string networkNodeVisualizerModule = default("^.networkNodeVisualizer"); // module path to the network node visualizer module, refers to a sibling submodule by default
         string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for interface changed signals, root module by default
+
         string nodeFilter = default(""); // which nodes are considered, matches no nodes by default
         string interfaceFilter = default("*"); // which interfaces are considered, matches all interfaces by default
+
         string content @enum("networkAddress", "macAddress", "info") = default("networkAddress"); // determines what interface data is displayed 
+
         string font = default("<default>"); // interface text font, automatic by default
         string fontColor = default("black"); // interface text font color
         string backgroundColor = default("yellow"); // interface text background color
         double opacity = default(0.5); // opacity of the visualization
+
         @class(InterfaceTableVisualizerBase);
 }

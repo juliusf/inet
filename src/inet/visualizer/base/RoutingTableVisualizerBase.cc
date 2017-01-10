@@ -55,7 +55,8 @@ void RoutingTableVisualizerBase::initialize(int stage)
         subscriptionModule->subscribe(NF_ROUTE_DELETED, this);
         subscriptionModule->subscribe(NF_ROUTE_CHANGED, this);
         subscriptionModule->subscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
-        destinationMatcher.setPattern(par("destinationFilter"));
+        destinationFilter.setPattern(par("destinationFilter"));
+        nodeFilter.setPattern(par("nodeFilter"));
         lineColor = cFigure::Color(par("lineColor"));
         lineStyle = cFigure::parseLineStyle(par("lineStyle"));
         lineWidth = par("lineWidth");
@@ -70,12 +71,16 @@ void RoutingTableVisualizerBase::initialize(int stage)
 void RoutingTableVisualizerBase::receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details)
 {
     Enter_Method_Silent();
-    if (signal == NF_ROUTE_ADDED || signal == NF_ROUTE_DELETED || signal == NF_ROUTE_CHANGED)
-        updateRoutes(check_and_cast<IIPv4RoutingTable *>(source));
+    if (signal == NF_ROUTE_ADDED || signal == NF_ROUTE_DELETED || signal == NF_ROUTE_CHANGED) {
+        auto routingTable = check_and_cast<IIPv4RoutingTable *>(source);
+        auto networkNode = getContainingNode(check_and_cast<cModule *>(source));
+        if (nodeFilter.matches(networkNode))
+            updateRoutes(routingTable);
+    }
     else if (signal == NF_INTERFACE_IPv4CONFIG_CHANGED) {
         for (cModule::SubmoduleIterator it(getSystemModule()); !it.end(); it++) {
             auto networkNode = *it;
-            if (isNetworkNode(networkNode) && destinationMatcher.matches(networkNode)) {
+            if (isNetworkNode(networkNode) && destinationFilter.matches(networkNode)) {
                 L3AddressResolver addressResolver;
                 auto routingTable = addressResolver.findIPv4RoutingTableOf(networkNode);
                 if (routingTable != nullptr)
@@ -110,7 +115,7 @@ std::vector<IPv4Address> RoutingTableVisualizerBase::getDestinations()
     std::vector<IPv4Address> destinations;
     for (cModule::SubmoduleIterator it(getSystemModule()); !it.end(); it++) {
         auto networkNode = *it;
-        if (isNetworkNode(networkNode) && destinationMatcher.matches(networkNode)) {
+        if (isNetworkNode(networkNode) && destinationFilter.matches(networkNode)) {
             auto interfaceTable = addressResolver.findInterfaceTableOf(networkNode);
             for (int i = 0; i < interfaceTable->getNumInterfaces(); i++) {
                 auto interface = interfaceTable->getInterface(i);
