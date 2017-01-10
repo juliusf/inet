@@ -21,7 +21,9 @@
 #include "inet/common/geometry/common/Coord.h"
 #include "inet/visualizer/base/VisualizerBase.h"
 #include "inet/visualizer/common/AnimationPosition.h"
+#include "inet/visualizer/common/InterfaceFilter.h"
 #include "inet/visualizer/common/LineManager.h"
+#include "inet/visualizer/common/NetworkNodeFilter.h"
 #include "inet/visualizer/common/PacketFilter.h"
 
 namespace inet {
@@ -44,6 +46,9 @@ class INET_API PathVisualizerBase : public VisualizerBase, public cListener
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayRoutes = false;
+    NetworkNodeFilter nodeFilter;
+    InterfaceFilter interfaceFilter;
     PacketFilter packetFilter;
     cFigure::Color lineColor;
     cFigure::LineStyle lineStyle;
@@ -74,6 +79,9 @@ class INET_API PathVisualizerBase : public VisualizerBase, public cListener
   protected:
     virtual void initialize(int stage) override;
     virtual void refreshDisplay() const override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
     virtual bool isPathEnd(cModule *module) const = 0;
     virtual bool isPathElement(cModule *module) const = 0;

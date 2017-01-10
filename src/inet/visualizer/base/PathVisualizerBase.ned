@@ -45,16 +45,26 @@ simple PathVisualizerBase extends VisualizerBase
 {
     parameters:
         string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for network layer signals, root module by default
-        string packetFilter = default(""); // which packets are considered to determine active routes, matches no packets by default
+
+        bool displayRoutes = default(false); // display polyline arrow for active routes, disabled by default
+
+        string nodeFilter = default("**"); // which nodes are considered, matches all nodes by default
+        string interfaceFilter = default("*"); // which interfaces are considered, matches all interfaces by default
+        string packetFilter = default("*"); // which packets are considered, matches all packets by default
+
         string lineColor = default("auto"); // route line color, automatic by default
         string lineStyle = default("solid"); // link line style (solid, dashed, dotted)
         double lineWidth = default(3); // route line width
+
         double lineShift = default(10); // route line shift to avoid overlapping routes
         string lineShiftMode = default("normal"); // determines how overlapping lines are shifted, possible values are: normal, x, y, z; optional prefix + or -
+
         double lineContactSpacing = default(3); // spacing between arrow end and submodule icon
         string lineContactMode @enum("circular", "rectangular") = default("rectangular"); // determines how arrows are clipped at the submodules
+
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive paths fade out
         double fadeOutTime @unit(s) = default(1s); // how quickly inactive routes fade away, 1 second by default
-        double fadeOutAnimationSpeed = default(0); // animation speed while the there are active routes, value must be in the range (0, +inf)
+        double fadeOutAnimationSpeed = default(0); // animation speed while there are active routes, value must be in the range (0, +inf)
+
         @class(PathVisualizerBase);
 }

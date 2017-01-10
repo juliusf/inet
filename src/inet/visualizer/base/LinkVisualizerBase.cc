@@ -31,12 +31,8 @@ LinkVisualizerBase::LinkVisualization::LinkVisualization(int sourceModuleId, int
 
 LinkVisualizerBase::~LinkVisualizerBase()
 {
-    // NOTE: lookup the module again because it may have been deleted first
-    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
-    if (subscriptionModule != nullptr) {
-        subscriptionModule->unsubscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
-        subscriptionModule->unsubscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
-    }
+    if (displayLinks)
+        unsubscribe();
 }
 
 void LinkVisualizerBase::initialize(int stage)
@@ -45,9 +41,9 @@ void LinkVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        subscriptionModule->subscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
-        subscriptionModule->subscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
+        displayLinks = par("displayLinks");
         nodeFilter.setPattern(par("nodeFilter"));
+        interfaceFilter.setPattern(par("interfaceFilter"));
         packetFilter.setPattern(par("packetFilter"));
         lineColor = cFigure::Color(par("lineColor"));
         lineStyle = cFigure::parseLineStyle(par("lineStyle"));
@@ -60,32 +56,52 @@ void LinkVisualizerBase::initialize(int stage)
         fadeOutTime = par("fadeOutTime");
         fadeOutAnimationSpeed = par("fadeOutAnimationSpeed");
         lineManager = LineManager::getLineManager(visualizerTargetModule->getCanvas());
+        if (displayLinks)
+            subscribe();
     }
 }
 
 void LinkVisualizerBase::refreshDisplay() const
 {
-    AnimationPosition currentAnimationPosition;
-    std::vector<const LinkVisualization *> removedLinkVisualizations;
-    for (auto it : linkVisualizations) {
-        auto linkVisualization = it.second;
-        double delta;
-        if (!strcmp(fadeOutMode, "simulationTime"))
-            delta = (currentAnimationPosition.getSimulationTime() - linkVisualization->lastUsageAnimationPosition.getSimulationTime()).dbl();
-        else if (!strcmp(fadeOutMode, "animationTime"))
-            delta = currentAnimationPosition.getAnimationTime() - linkVisualization->lastUsageAnimationPosition.getAnimationTime();
-        else if (!strcmp(fadeOutMode, "realTime"))
-            delta = currentAnimationPosition.getRealTime() - linkVisualization->lastUsageAnimationPosition.getRealTime();
-        else
-            throw cRuntimeError("Unknown fadeOutMode: %s", fadeOutMode);
-        if (delta > fadeOutTime)
-            removedLinkVisualizations.push_back(linkVisualization);
-        else
-            setAlpha(linkVisualization, (1 - delta) / fadeOutTime);
+    if (displayLinks) {
+        AnimationPosition currentAnimationPosition;
+        std::vector<const LinkVisualization *> removedLinkVisualizations;
+        for (auto it : linkVisualizations) {
+            auto linkVisualization = it.second;
+            double delta;
+            if (!strcmp(fadeOutMode, "simulationTime"))
+                delta = (currentAnimationPosition.getSimulationTime() - linkVisualization->lastUsageAnimationPosition.getSimulationTime()).dbl();
+            else if (!strcmp(fadeOutMode, "animationTime"))
+                delta = currentAnimationPosition.getAnimationTime() - linkVisualization->lastUsageAnimationPosition.getAnimationTime();
+            else if (!strcmp(fadeOutMode, "realTime"))
+                delta = currentAnimationPosition.getRealTime() - linkVisualization->lastUsageAnimationPosition.getRealTime();
+            else
+                throw cRuntimeError("Unknown fadeOutMode: %s", fadeOutMode);
+            if (delta > fadeOutTime)
+                removedLinkVisualizations.push_back(linkVisualization);
+            else
+                setAlpha(linkVisualization, (1 - delta) / fadeOutTime);
+        }
+        for (auto linkVisualization : removedLinkVisualizations) {
+            const_cast<LinkVisualizerBase *>(this)->removeLinkVisualization(linkVisualization);
+            delete linkVisualization;
+        }
     }
-    for (auto linkVisualization : removedLinkVisualizations) {
-        const_cast<LinkVisualizerBase *>(this)->removeLinkVisualization(linkVisualization);
-        delete linkVisualization;
+}
+
+void LinkVisualizerBase::subscribe()
+{
+    subscriptionModule->subscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
+    subscriptionModule->subscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
+}
+
+void LinkVisualizerBase::unsubscribe()
+{
+    // NOTE: lookup the module again because it may have been deleted first
+    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
+    if (subscriptionModule != nullptr) {
+        subscriptionModule->unsubscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
+        subscriptionModule->unsubscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
     }
 }
 
@@ -140,6 +156,7 @@ void LinkVisualizerBase::updateLinkVisualization(cModule *source, cModule *desti
 void LinkVisualizerBase::receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details)
 {
     Enter_Method_Silent();
+    // TODO: use interfaceFilter
     if (signal == LayeredProtocolBase::packetReceivedFromUpperSignal) {
         if (isLinkEnd(static_cast<cModule *>(source))) {
             auto module = check_and_cast<cModule *>(source);

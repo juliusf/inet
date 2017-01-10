@@ -31,13 +31,8 @@ PathVisualizerBase::PathVisualization::PathVisualization(const std::vector<int>&
 
 PathVisualizerBase::~PathVisualizerBase()
 {
-    // NOTE: lookup the module again because it may have been deleted first
-    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
-    if (subscriptionModule != nullptr) {
-        subscriptionModule->unsubscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
-        subscriptionModule->unsubscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
-        subscriptionModule->unsubscribe(LayeredProtocolBase::packetReceivedFromLowerSignal, this);
-    }
+    if (displayRoutes)
+        unsubscribe();
 }
 
 void PathVisualizerBase::initialize(int stage)
@@ -46,9 +41,9 @@ void PathVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        subscriptionModule->subscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
-        subscriptionModule->subscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
-        subscriptionModule->subscribe(LayeredProtocolBase::packetReceivedFromLowerSignal, this);
+        displayRoutes = par("displayRoutes");
+        nodeFilter.setPattern(par("nodeFilter"));
+        interfaceFilter.setPattern(par("interfaceFilter"));
         packetFilter.setPattern(par("packetFilter"));
         if (strcmp(par("lineColor"), "auto"))
             lineColor = cFigure::Color(par("lineColor"));
@@ -62,6 +57,8 @@ void PathVisualizerBase::initialize(int stage)
         fadeOutTime = par("fadeOutTime");
         fadeOutAnimationSpeed = par("fadeOutAnimationSpeed");
         lineManager = LineManager::getLineManager(visualizerTargetModule->getCanvas());
+        if (displayRoutes)
+            subscribe();
     }
 }
 
@@ -89,6 +86,24 @@ void PathVisualizerBase::refreshDisplay() const
         auto sourceAndDestination = std::pair<int, int>(path->moduleIds.front(), path->moduleIds.back());
         const_cast<PathVisualizerBase *>(this)->removePathVisualization(sourceAndDestination, path);
         delete path;
+    }
+}
+
+void PathVisualizerBase::subscribe()
+{
+    subscriptionModule->subscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
+    subscriptionModule->subscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
+    subscriptionModule->subscribe(LayeredProtocolBase::packetReceivedFromLowerSignal, this);
+}
+
+void PathVisualizerBase::unsubscribe()
+{
+    // NOTE: lookup the module again because it may have been deleted first
+    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
+    if (subscriptionModule != nullptr) {
+        subscriptionModule->unsubscribe(LayeredProtocolBase::packetSentToUpperSignal, this);
+        subscriptionModule->unsubscribe(LayeredProtocolBase::packetReceivedFromUpperSignal, this);
+        subscriptionModule->unsubscribe(LayeredProtocolBase::packetReceivedFromLowerSignal, this);
     }
 }
 

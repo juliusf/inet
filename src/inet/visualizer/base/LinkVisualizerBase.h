@@ -21,6 +21,7 @@
 #include "inet/common/geometry/common/Coord.h"
 #include "inet/visualizer/base/VisualizerBase.h"
 #include "inet/visualizer/common/AnimationPosition.h"
+#include "inet/visualizer/common/InterfaceFilter.h"
 #include "inet/visualizer/common/LineManager.h"
 #include "inet/visualizer/common/NetworkNodeFilter.h"
 #include "inet/visualizer/common/PacketFilter.h"
@@ -45,7 +46,9 @@ class INET_API LinkVisualizerBase : public VisualizerBase, public cListener
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayLinks = false;
     NetworkNodeFilter nodeFilter;
+    InterfaceFilter interfaceFilter;
     PacketFilter packetFilter;
     cFigure::Color lineColor;
     cFigure::LineStyle lineStyle;
@@ -72,6 +75,9 @@ class INET_API LinkVisualizerBase : public VisualizerBase, public cListener
   protected:
     virtual void initialize(int stage) override;
     virtual void refreshDisplay() const override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
     virtual bool isLinkEnd(cModule *module) const = 0;
 
