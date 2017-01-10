@@ -44,15 +44,21 @@ class INET_API Ieee80211VisualizerBase : public VisualizerBase, public cListener
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayAssociations = false;
     NetworkNodeFilter nodeFilter;
     InterfaceFilter interfaceFilter;
     const char *icon = nullptr;
+    cFigure::Font font;
+    cFigure::Color fontColor;
     //@}
 
     std::map<std::pair<int, int>, Ieee80211Visualization *> ieee80211Visualizations;
 
   protected:
     virtual void initialize(int stage) override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
     virtual Ieee80211Visualization *createIeee80211Visualization(cModule *networkNode, InterfaceEntry *interfaceEntry, std::string ssid) = 0;
     virtual Ieee80211Visualization *getIeee80211Visualization(cModule *networkNode, InterfaceEntry *interfaceEntry);

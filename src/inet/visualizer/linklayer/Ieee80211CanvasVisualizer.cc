@@ -58,8 +58,9 @@ Ieee80211VisualizerBase::Ieee80211Visualization *Ieee80211CanvasVisualizer::crea
     labelFigure->setTags("ieee80211_association SSID");
     labelFigure->setTooltip("This label represents the SSID of an IEEE 802.11 network");
     labelFigure->setAnchor(cFigure::ANCHOR_CENTER);
+    labelFigure->setFont(font);
+    labelFigure->setColor(fontColor);
     labelFigure->setText(ssid.c_str());
-    labelFigure->setColor(cFigure::BLACK);
     labelFigure->setPosition(iconFigure->getBounds().getSize() / 2);
     auto networkNodeVisualization = networkNodeVisualizer->getNeworkNodeVisualization(networkNode);
     return new Ieee80211CanvasVisualization(networkNodeVisualization, labeledIconFigure, networkNode->getId(), interfaceEntry->getInterfaceId());
