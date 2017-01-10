@@ -22,6 +22,7 @@ import inet.networklayer.configurator.ipv4.IPv4NetworkConfigurator;
 import inet.node.ethernet.Eth10M;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
+import inet.visualizer.integrated.IntegratedCanvasVisualizer;
 
 
 network WiredNetWithDHCP
@@ -29,6 +30,7 @@ network WiredNetWithDHCP
     parameters:
         int numHosts;
     submodules:
+        visualizer: IntegratedCanvasVisualizer;
         server: StandardHost {
             @display("p=42,494");
         }
