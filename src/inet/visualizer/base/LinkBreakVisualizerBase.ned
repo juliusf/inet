@@ -33,11 +33,20 @@ simple LinkBreakVisualizerBase extends VisualizerBase
 {
     parameters:
         string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for link break signals, root module by default
-        string nodeFilter = default(""); // which network nodes are considered to display link breaks, matches no nodes by default
+
+        bool displayLinkBreaks = default(false); // display icons for link breaks, disabled by default
+
+        string nodeFilter = default("**"); // which network nodes are considered, matches all nodes by default
+        string interfaceFilter = default("*"); // which interfaces are considered, matches all interfaces by default
+        string packetFilter = default("*"); // which packets are considered, matches all packets by default
+
         string icon = default("status/stop");
         double iconTintAmount = default(0);
         string iconTintColor = default("");
+
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive link breaks fade out
         double fadeOutTime @unit(s) = default(1s); // how quickly link breaks fade away, 1 second by default
+        double fadeOutAnimationSpeed = default(0); // animation speed while there are link breaks, value must be in the range (0, +inf)
+
         @class(LinkBreakVisualizerBase);
 }

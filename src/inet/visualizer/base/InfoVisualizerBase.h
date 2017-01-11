@@ -42,7 +42,7 @@ class INET_API InfoVisualizerBase : public VisualizerBase
     /** @name Parameters */
     //@{
     cFigure::Font font;
-    cFigure::Color fontColor;
+    cFigure::Color textColor;
     cFigure::Color backgroundColor;
     ModuleFilter moduleFilter;
     double opacity = NaN;

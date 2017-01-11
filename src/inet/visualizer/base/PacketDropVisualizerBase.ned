@@ -34,11 +34,23 @@ simple PacketDropVisualizerBase extends VisualizerBase
 {
     parameters:
         string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for packet drop signals, root module by default
-        string packetFilter = default(""); // which packets are considered, matches no packets by default
+
+        bool displayPacketDrops = default(false); // display icons for packet drops, disabled by default
+
+        string nodeFilter = default("**"); // which network nodes are considered, matches all nodes by default
+        string interfaceFilter = default("*"); // which interfaces are considered, matches all interfaces by default
+        string packetFilter = default("*"); // which packets are considered, matches all packets by default
+
         string icon = default("msg/packet_s"); // packet drop visualization icon
         double iconTintAmount = default(0); // colorization amount between 0 and 1, disabled by default
         string iconTintColor = default(""); // color for icon tinting, disabled by default
+
+        string labelFont = default("<default>"); // label font, automatic by default
+        string labelColor = default("black"); // label color, black by default
+
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive packet drops fade out
         double fadeOutTime @unit(s) = default(1s); // how quickly packet drops fade away, 1 second by default
+        double fadeOutAnimationSpeed = default(0); // animation speed while there are packet drops, value must be in the range (0, +inf)
+
         @class(PacketDropVisualizerBase);
 }

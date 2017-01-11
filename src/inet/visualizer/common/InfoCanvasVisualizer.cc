@@ -56,7 +56,7 @@ InfoVisualizerBase::InfoVisualization *InfoCanvasVisualizer::createInfoVisualiza
     figure->setAssociatedObject(module);
     figure->setZIndex(zIndex);
     figure->getLabelFigure()->setFont(font);
-    figure->setFontColor(fontColor);
+    figure->setFontColor(textColor);
     figure->setBackgroundColor(backgroundColor);
     figure->setOpacity(opacity);
     auto visualization = networkNodeVisualizer->getNeworkNodeVisualization(getContainingNode(module));

@@ -49,7 +49,7 @@ class INET_API InterfaceTableVisualizerBase : public VisualizerBase, public cLis
     InterfaceFilter interfaceFilter;
     const char *content = nullptr;
     cFigure::Font font;
-    cFigure::Color fontColor;
+    cFigure::Color textColor;
     cFigure::Color backgroundColor;
     double opacity = NaN;
     //@}

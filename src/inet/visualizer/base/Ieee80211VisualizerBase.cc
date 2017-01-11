@@ -48,8 +48,8 @@ void Ieee80211VisualizerBase::initialize(int stage)
         nodeFilter.setPattern(par("nodeFilter"));
         interfaceFilter.setPattern(par("interfaceFilter"));
         icon = par("icon");
-        font = cFigure::parseFont(par("font"));
-        fontColor = cFigure::Color(par("fontColor"));
+        ssidFont = cFigure::parseFont(par("ssidFont"));
+        ssidColor = cFigure::Color(par("ssidColor"));
         if (displayAssociations)
             subscribe();
     }

@@ -52,7 +52,7 @@ InfoVisualizerBase::InfoVisualization *InfoOsgVisualizer::createInfoVisualizatio
     auto text = new osgText::Text();
     text->setCharacterSize(18);
     text->setBoundingBoxColor(osg::Vec4(backgroundColor.red / 255.0, backgroundColor.green / 255.0, backgroundColor.blue / 255.0, 0.5));
-    text->setColor(osg::Vec4(fontColor.red / 255.0, fontColor.green / 255.0, fontColor.blue / 255.0, 1.0));
+    text->setColor(osg::Vec4(textColor.red / 255.0, textColor.green / 255.0, textColor.blue / 255.0, 1.0));
     text->setAlignment(osgText::Text::CENTER_BOTTOM);
     text->setText("");
     text->setDrawMode(osgText::Text::FILLEDBOUNDINGBOX | osgText::Text::TEXT);

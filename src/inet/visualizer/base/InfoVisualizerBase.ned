@@ -30,11 +30,14 @@ simple InfoVisualizerBase extends VisualizerBase
 {
     parameters:
         string networkNodeVisualizerModule = default("^.networkNodeVisualizer"); // module path to the network node visualizer module, refers to a sibling submodule by default
+        
         string modules = default(""); // specifies the path of the submodules of network nodes, no submodules by default
         string content @enum("str", "displayStringText") = default("str"); // determines what is displayed on network nodes, info by default 
+        
         string font = default("<default>"); // info text font, automatic by default
-        string fontColor = default("black"); // info text font color, black by default
+        string textColor = default("black"); // info text font color, black by default
         string backgroundColor = default("white"); // info text background color, white by default
         double opacity = default(0.5); // opacity of the visualization
+        
         @class(InfoVisualizerBase);
 }

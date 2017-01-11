@@ -41,12 +41,8 @@ PacketDropVisualizerBase::~PacketDropVisualizerBase()
 {
     for (auto packetDrop : packetDropVisualizations)
         delete packetDrop->packet;
-    // NOTE: lookup the module again because it may have been deleted first
-    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
-    if (subscriptionModule != nullptr) {
-        subscriptionModule->unsubscribe(LayeredProtocolBase::packetFromLowerDroppedSignal, this);
-        subscriptionModule->unsubscribe(LayeredProtocolBase::packetFromUpperDroppedSignal, this);
-    }
+    if (displayPacketDrops)
+        unsubscribe();
 }
 
 void PacketDropVisualizerBase::initialize(int stage)
@@ -55,15 +51,21 @@ void PacketDropVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        subscriptionModule->subscribe(LayeredProtocolBase::packetFromLowerDroppedSignal, this);
-        subscriptionModule->subscribe(LayeredProtocolBase::packetFromUpperDroppedSignal, this);
+        displayPacketDrops = par("displayPacketDrops");
+        nodeFilter.setPattern(par("nodeFilter"));
+        interfaceFilter.setPattern(par("interfaceFilter"));
         packetFilter.setPattern(par("packetFilter"));
         icon = par("icon");
         iconTintAmount = par("iconTintAmount");
         if (iconTintAmount != 0)
             iconTintColor = cFigure::Color(par("iconTintColor"));
+        labelFont = cFigure::parseFont(par("labelFont"));
+        labelColor = cFigure::Color(par("labelColor"));
         fadeOutMode = par("fadeOutMode");
         fadeOutTime = par("fadeOutTime");
+        fadeOutAnimationSpeed = par("fadeOutAnimationSpeed");
+        if (displayPacketDrops)
+            subscribe();
     }
 }
 
@@ -89,6 +91,22 @@ void PacketDropVisualizerBase::refreshDisplay() const
     for (auto packetDrop : removedPacketDropVisualizations) {
         const_cast<PacketDropVisualizerBase *>(this)->removePacketDropVisualization(packetDrop);
         delete packetDrop;
+    }
+}
+
+void PacketDropVisualizerBase::subscribe()
+{
+    subscriptionModule->subscribe(LayeredProtocolBase::packetFromLowerDroppedSignal, this);
+    subscriptionModule->subscribe(LayeredProtocolBase::packetFromUpperDroppedSignal, this);
+}
+
+void PacketDropVisualizerBase::unsubscribe()
+{
+    // NOTE: lookup the module again because it may have been deleted first
+    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
+    if (subscriptionModule != nullptr) {
+        subscriptionModule->unsubscribe(LayeredProtocolBase::packetFromLowerDroppedSignal, this);
+        subscriptionModule->unsubscribe(LayeredProtocolBase::packetFromUpperDroppedSignal, this);
     }
 }
 

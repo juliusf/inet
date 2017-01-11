@@ -40,8 +40,8 @@ simple Ieee80211VisualizerBase extends VisualizerBase
         string interfaceFilter = default("*"); // which interfaces are considered, matches all interfaces by default
 
         string icon = default("misc/signal_s"); // wireless network visualization icon
-        string font = default("<default>"); // SSID font, automatic by default
-        string fontColor = default("black"); // SSID color, black by default
+        string ssidFont = default("<default>"); // SSID font, automatic by default
+        string ssidColor = default("black"); // SSID color, black by default
 
         @class(Ieee80211VisualizerBase);
 }

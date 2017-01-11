@@ -44,6 +44,12 @@ void PacketDropCanvasVisualizer::initialize(int stage)
     }
 }
 
+void PacketDropCanvasVisualizer::refreshDisplay() const
+{
+    PacketDropVisualizerBase::refreshDisplay();
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(packetDropVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
+}
+
 const PacketDropVisualizerBase::PacketDropVisualization *PacketDropCanvasVisualizer::createPacketDropVisualization(cModule *module, cPacket *packet) const
 {
     std::string icon(this->icon);
@@ -61,6 +67,8 @@ const PacketDropVisualizerBase::PacketDropVisualization *PacketDropCanvasVisuali
     labelFigure->setTags("packet_drop");
     labelFigure->setTooltip("This icon represents a packet dropped in a network node");
     labelFigure->setAssociatedObject(packet);
+    labelFigure->setFont(labelFont);
+    labelFigure->setColor(labelColor);
     labelFigure->setText(packet->getName());
     return new PacketDropCanvasVisualization(figure, module->getId(), packet, position);
 }

@@ -48,8 +48,8 @@ class INET_API Ieee80211VisualizerBase : public VisualizerBase, public cListener
     NetworkNodeFilter nodeFilter;
     InterfaceFilter interfaceFilter;
     const char *icon = nullptr;
-    cFigure::Font font;
-    cFigure::Color fontColor;
+    cFigure::Font ssidFont;
+    cFigure::Color ssidColor;
     //@}
 
     std::map<std::pair<int, int>, Ieee80211Visualization *> ieee80211Visualizations;

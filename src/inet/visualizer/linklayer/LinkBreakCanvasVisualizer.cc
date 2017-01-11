@@ -56,6 +56,7 @@ void LinkBreakCanvasVisualizer::refreshDisplay() const
         auto figure = linkBreakVisualization->figure;
         figure->setPosition((transmitterPosition + receiverPosition) / 2);
     }
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(linkBreakVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
 }
 
 const LinkBreakVisualizerBase::LinkBreakVisualization *LinkBreakCanvasVisualizer::createLinkBreakVisualization(cModule *transmitter, cModule *receiver) const

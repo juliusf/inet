@@ -36,10 +36,8 @@ LinkBreakVisualizerBase::LinkBreakVisualization::LinkBreakVisualization(int tran
 
 LinkBreakVisualizerBase::~LinkBreakVisualizerBase()
 {
-    // NOTE: lookup the module again because it may have been deleted first
-    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
-    if (subscriptionModule != nullptr)
-        subscriptionModule->unsubscribe(NF_LINK_BREAK, this);
+    if (displayLinkBreaks)
+        unsubscribe();
 }
 
 void LinkBreakVisualizerBase::initialize(int stage)
@@ -48,14 +46,19 @@ void LinkBreakVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        subscriptionModule->subscribe(NF_LINK_BREAK, this);
+        displayLinkBreaks = par("displayLinkBreaks");
         nodeFilter.setPattern(par("nodeFilter"));
+        interfaceFilter.setPattern(par("interfaceFilter"));
+        packetFilter.setPattern(par("packetFilter"));
         icon = par("icon");
         iconTintAmount = par("iconTintAmount");
         if (iconTintAmount != 0)
             iconTintColor = cFigure::Color(par("iconTintColor"));
         fadeOutMode = par("fadeOutMode");
         fadeOutTime = par("fadeOutTime");
+        fadeOutAnimationSpeed = par("fadeOutAnimationSpeed");
+        if (displayLinkBreaks)
+            subscribe();
     }
 }
 
@@ -83,6 +86,19 @@ void LinkBreakVisualizerBase::refreshDisplay() const
         const_cast<LinkBreakVisualizerBase *>(this)->removeLinkBreakVisualization(linkBreakVisualization);
         delete linkBreakVisualization;
     }
+}
+
+void LinkBreakVisualizerBase::subscribe()
+{
+    subscriptionModule->subscribe(NF_LINK_BREAK, this);
+}
+
+void LinkBreakVisualizerBase::unsubscribe()
+{
+    // NOTE: lookup the module again because it may have been deleted first
+    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
+    if (subscriptionModule != nullptr)
+        subscriptionModule->unsubscribe(NF_LINK_BREAK, this);
 }
 
 void LinkBreakVisualizerBase::receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details)

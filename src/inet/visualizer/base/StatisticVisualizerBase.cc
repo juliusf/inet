@@ -46,19 +46,19 @@ void StatisticVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        sourceFilter.setPattern(par("sourcePathFilter"));
+        sourceFilter.setPattern(par("sourceFilter"));
         signalName = par("signalName");
         if (*signalName != '\0')
             subscriptionModule->subscribe(registerSignal(signalName), this);
         statisticName = par("statisticName");
-        unit = par("unit");
         prefix = par("prefix");
-        font = cFigure::parseFont(par("font"));
-        fontColor = cFigure::Color(par("fontColor"));
-        backgroundColor = cFigure::Color(par("backgroundColor"));
-        opacity = par("opacity");
+        unit = par("unit");
         minValue = par("minValue");
         maxValue = par("maxValue");
+        font = cFigure::parseFont(par("font"));
+        textColor = cFigure::Color(par("textColor"));
+        backgroundColor = cFigure::Color(par("backgroundColor"));
+        opacity = par("opacity");
     }
 }
 

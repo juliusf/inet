@@ -49,7 +49,7 @@ InterfaceTableVisualizerBase::InterfaceVisualization *InterfaceTableCanvasVisual
     figure->setAssociatedObject(interfaceEntry);
     figure->setZIndex(zIndex);
     figure->getLabelFigure()->setFont(font);
-    figure->setFontColor(fontColor);
+    figure->setFontColor(textColor);
     figure->setBackgroundColor(backgroundColor);
     figure->setOpacity(opacity);
     auto networkNodeVisualization = networkNodeVisualizer->getNeworkNodeVisualization(networkNode);

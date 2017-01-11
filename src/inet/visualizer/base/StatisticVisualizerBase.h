@@ -59,14 +59,14 @@ class INET_API StatisticVisualizerBase : public VisualizerBase, public cListener
     ModuleFilter sourceFilter;
     const char *signalName = nullptr;
     const char *statisticName = nullptr;
-    const char *unit = nullptr;
     const char *prefix = nullptr;
-    cFigure::Font font;
-    cFigure::Color fontColor;
-    cFigure::Color backgroundColor;
-    double opacity = NaN;
+    const char *unit = nullptr;
     double minValue = NaN;
     double maxValue = NaN;
+    cFigure::Font font;
+    cFigure::Color textColor;
+    cFigure::Color backgroundColor;
+    double opacity = NaN;
     //@}
 
     std::map<std::pair<int, simsignal_t>, StatisticVisualization *> statisticVisualizations;

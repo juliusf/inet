@@ -48,7 +48,7 @@ StatisticVisualizerBase::StatisticVisualization *StatisticCanvasVisualizer::crea
     figure->setTooltip("This label shows the current value of a statistic");
     figure->setZIndex(zIndex);
     figure->getLabelFigure()->setFont(font);
-    figure->setFontColor(fontColor);
+    figure->setFontColor(textColor);
     figure->setBackgroundColor(backgroundColor);
     figure->setOpacity(opacity);
     figure->setText("");

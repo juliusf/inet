@@ -41,7 +41,7 @@ simple InterfaceTableVisualizerBase extends VisualizerBase
         string content @enum("networkAddress", "macAddress", "info") = default("networkAddress"); // determines what interface data is displayed 
 
         string font = default("<default>"); // interface text font, automatic by default
-        string fontColor = default("black"); // interface text font color
+        string textColor = default("black"); // interface text font color
         string backgroundColor = default("yellow"); // interface text background color
         double opacity = default(0.5); // opacity of the visualization
 

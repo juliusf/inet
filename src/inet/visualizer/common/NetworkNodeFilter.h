@@ -15,8 +15,8 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __INET_NODEFILTER_H
-#define __INET_NODEFILTER_H
+#ifndef __INET_NETWORKNODEFILTER_H
+#define __INET_NETWORKNODEFILTER_H
 
 #include "inet/common/MatchableObject.h"
 
@@ -43,5 +43,5 @@ class INET_API NetworkNodeFilter
 
 } // namespace inet
 
-#endif // ifndef __INET_NODEFILTER_H
+#endif // ifndef __INET_NETWORKNODEFILTER_H
 

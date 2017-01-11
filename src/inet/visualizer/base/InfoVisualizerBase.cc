@@ -32,7 +32,7 @@ void InfoVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         font = cFigure::parseFont(par("font"));
-        fontColor = cFigure::Color(par("fontColor"));
+        textColor = cFigure::Color(par("textColor"));
         backgroundColor = cFigure::Color(par("backgroundColor"));
         moduleFilter.setPattern(par("modules"));
         opacity = par("opacity");

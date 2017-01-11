@@ -20,6 +20,9 @@
 
 #include "inet/visualizer/base/VisualizerBase.h"
 #include "inet/visualizer/common/AnimationPosition.h"
+#include "inet/visualizer/common/InterfaceFilter.h"
+#include "inet/visualizer/common/LineManager.h"
+#include "inet/visualizer/common/NetworkNodeFilter.h"
 #include "inet/visualizer/common/PacketFilter.h"
 
 namespace inet {
@@ -45,27 +48,38 @@ class INET_API PacketDropVisualizerBase : public VisualizerBase, public cListene
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayPacketDrops = false;
+    NetworkNodeFilter nodeFilter;
+    InterfaceFilter interfaceFilter;
     PacketFilter packetFilter;
     const char *icon = nullptr;
     cFigure::Color iconTintColor;
     double iconTintAmount = NaN;
+    cFigure::Font labelFont;
+    cFigure::Color labelColor;
     const char *fadeOutMode = nullptr;
     double fadeOutTime = NaN;
+    double fadeOutAnimationSpeed = NaN;
     //@}
 
     std::vector<const PacketDropVisualization *> packetDropVisualizations;
 
   protected:
-    virtual ~PacketDropVisualizerBase();
-
     virtual void initialize(int stage) override;
     virtual void refreshDisplay() const override;
-    virtual void receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details) override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
     virtual void setAlpha(const PacketDropVisualization *packetDropVisualization, double alpha) const = 0;
     virtual const PacketDropVisualization *createPacketDropVisualization(cModule *module, cPacket *packet) const = 0;
     virtual void addPacketDropVisualization(const PacketDropVisualization *packetDropVisualization);
     virtual void removePacketDropVisualization(const PacketDropVisualization *packetDropVisualization);
+
+  public:
+    virtual ~PacketDropVisualizerBase();
+
+    virtual void receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details) override;
 };
 
 } // namespace visualizer

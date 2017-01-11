@@ -45,6 +45,7 @@ class INET_API PacketDropCanvasVisualizer : public PacketDropVisualizerBase
 
   protected:
     virtual void initialize(int stage) override;
+    virtual void refreshDisplay() const override;
 
     virtual const PacketDropVisualization *createPacketDropVisualization(cModule *module, cPacket *packet) const override;
     virtual void addPacketDropVisualization(const PacketDropVisualization *packetDrop) override;

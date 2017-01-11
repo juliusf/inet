@@ -23,7 +23,7 @@ package inet.visualizer.base;
 // visualization of statistic values is done in derived modules. It subscribes
 // for the signal determined by the signalName parameter at the module specified
 // by the subscriptionModule parameter. If the visualizer receives such a signal
-// it checks if the source matches the sourcePathFilter parameter. If the signal
+// it checks if the source matches the sourceFilter parameter. If the signal
 // passes the check it determines the last value of the statistic specified by
 // the statisticName parameter.
 //
@@ -34,16 +34,20 @@ simple StatisticVisualizerBase extends VisualizerBase
     parameters:
         string networkNodeVisualizerModule = default("^.networkNodeVisualizer"); // module path of the network node visualizer module, refers to a sibling submodule by default
         string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for the signal, root module by default
-        string sourcePathFilter = default(""); // pattern that must match the full path of the source, no source filter by default
+
+        string sourceFilter = default(""); // pattern that must match the signal source, no source filter by default
         string signalName = default(""); // signal name to subscribe, no signal name by default
         string statisticName = default(signalName); // statistic name to get the value, signal name by default
+
         string prefix = default(statisticName); // display this string as the prefix of the value, statistic name by default
         string unit = default(""); // display the value in this unit, statistic unit by default
-        string font = default("<default>"); // statistic value font, automatic by default
-        string fontColor = default("black"); // statistic value font color, black by default
-        string backgroundColor = default("white"); // statistic value background color, white by default
-        double opacity = default(0.5); // opacity of the visualization
         double minValue = default(-1/0); // minimum value of the statistic, negative infinity by default
         double maxValue = default(1/0); // maximum value of the statistic, positive infinity by default
+
+        string font = default("<default>"); // statistic value font, automatic by default
+        string textColor = default("black"); // statistic value font color, black by default
+        string backgroundColor = default("white"); // statistic value background color, white by default
+        double opacity = default(0.5); // opacity of the visualization
+
         @class(StatisticVisualizerBase);
 }

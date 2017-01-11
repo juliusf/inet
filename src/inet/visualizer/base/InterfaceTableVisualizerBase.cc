@@ -57,7 +57,7 @@ void InterfaceTableVisualizerBase::initialize(int stage)
         interfaceFilter.setPattern(par("interfaceFilter"));
         content = par("content");
         font = cFigure::parseFont(par("font"));
-        fontColor = cFigure::parseColor(par("fontColor"));
+        textColor = cFigure::parseColor(par("textColor"));
         backgroundColor = cFigure::parseColor(par("backgroundColor"));
         opacity = par("opacity");
     }

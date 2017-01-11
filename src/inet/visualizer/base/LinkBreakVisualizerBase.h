@@ -21,7 +21,10 @@
 #include "inet/linklayer/common/MACAddress.h"
 #include "inet/visualizer/base/VisualizerBase.h"
 #include "inet/visualizer/common/AnimationPosition.h"
+#include "inet/visualizer/common/InterfaceFilter.h"
+#include "inet/visualizer/common/LineManager.h"
 #include "inet/visualizer/common/NetworkNodeFilter.h"
+#include "inet/visualizer/common/PacketFilter.h"
 
 namespace inet {
 
@@ -45,12 +48,16 @@ class INET_API LinkBreakVisualizerBase : public VisualizerBase, public cListener
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayLinkBreaks = false;
     NetworkNodeFilter nodeFilter;
+    InterfaceFilter interfaceFilter;
+    PacketFilter packetFilter;
     const char *icon = nullptr;
     double iconTintAmount = NaN;
     cFigure::Color iconTintColor;
     const char *fadeOutMode = nullptr;
     double fadeOutTime = NaN;
+    double fadeOutAnimationSpeed = NaN;
     //@}
 
     std::map<std::pair<int, int>, const LinkBreakVisualization *> linkBreakVisualizations;
@@ -58,7 +65,9 @@ class INET_API LinkBreakVisualizerBase : public VisualizerBase, public cListener
   protected:
     virtual void initialize(int stage) override;
     virtual void refreshDisplay() const override;
-    virtual void receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details) override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
     virtual const LinkBreakVisualization *createLinkBreakVisualization(cModule *transmitter, cModule *receiver) const = 0;
     virtual void addLinkBreakVisualization(const LinkBreakVisualization *linkBreakVisualization);
@@ -69,6 +78,8 @@ class INET_API LinkBreakVisualizerBase : public VisualizerBase, public cListener
 
   public:
     virtual ~LinkBreakVisualizerBase();
+
+    virtual void receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details) override;
 };
 
 } // namespace visualizer
