@@ -27,16 +27,21 @@ package inet.visualizer.base;
 simple TracingObstacleLossVisualizerBase extends VisualizerBase
 {
     parameters:
-        string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for obstacle loss signals, root module by default
+        string subscriptionModule = default("<root>"); // module where the visualizer subscribes for obstacle loss signals, root module by default
+
         bool displayIntersection = default(false); // display instersections of transmissions and physical objects, disabled by default
-        bool displayFaceNormalVector = default(false); // display face normal vectors of instersections, disabled by default
         string intersectionLineColor = default("red");
         string intersectionLineStyle = default("solid");
         double intersectionLineWidth = default(1);
+
+        bool displayFaceNormalVector = default(false); // display face normal vectors of instersections, disabled by default
         string faceNormalLineColor = default("grey");
         string faceNormalLineStyle = default("solid");
         double faceNormalLineWidth = default(1);
+
         string fadeOutMode @enum("realTime", "animationTime", "simulationTime") = default("realTime"); // specifies how inactive obstacle losses fade out
         double fadeOutTime @unit(s) = default(1s); // how quickly link breaks fade away, 1 second by default
+        double fadeOutAnimationSpeed = default(0); // animation speed while there are obstacle losses, value must be in the range (0, +inf)
+
         @class(TracingObstacleLossVisualizerBase);
 }

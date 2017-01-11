@@ -35,11 +35,11 @@ package inet.visualizer.base;
 simple LinkVisualizerBase extends VisualizerBase
 {
     parameters:
-        string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for signals, root module by default
+        string subscriptionModule = default("<root>"); // module where the visualizer subscribes for signals, root module by default
 
         bool displayLinks = default(false); // display arrows for active links, disabled by default
 
-        string nodeFilter = default("**"); // which nodes are considered, matches all nodes by default
+        string nodeFilter = default("*"); // which nodes are considered, matches all nodes by default
         string interfaceFilter = default("*"); // which interfaces are considered, matches all interfaces by default
         string packetFilter = default("*"); // which packets are considered, matches all packets by default
 

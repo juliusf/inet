@@ -41,15 +41,16 @@ void TracingObstacleLossVisualizerBase::initialize(int stage)
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
         subscriptionModule->subscribe(ITracingObstacleLoss::obstaclePenetratedSignal, this);
         displayIntersection = par("displayIntersection");
-        displayFaceNormalVector = par("displayFaceNormalVector");
         intersectionLineColor = cFigure::parseColor(par("intersectionLineColor"));
         intersectionLineStyle = cFigure::parseLineStyle(par("intersectionLineStyle"));
         intersectionLineWidth = par("intersectionLineWidth");
+        displayFaceNormalVector = par("displayFaceNormalVector");
         faceNormalLineColor = cFigure::parseColor(par("faceNormalLineColor"));
         faceNormalLineStyle = cFigure::parseLineStyle(par("faceNormalLineStyle"));
         faceNormalLineWidth = par("faceNormalLineWidth");
         fadeOutMode = par("fadeOutMode");
         fadeOutTime = par("fadeOutTime");
+        fadeOutAnimationSpeed = par("fadeOutAnimationSpeed");
     }
 }
 

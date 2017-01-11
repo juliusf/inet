@@ -33,9 +33,11 @@ simple InterfaceTableVisualizerBase extends VisualizerBase
 {
     parameters:
         string networkNodeVisualizerModule = default("^.networkNodeVisualizer"); // module path to the network node visualizer module, refers to a sibling submodule by default
-        string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for interface changed signals, root module by default
+        string subscriptionModule = default("<root>"); // module where the visualizer subscribes for interface changed signals, root module by default
+        
+        bool displayInterfaceTables = default(false); // display interface table data, disabled by default
 
-        string nodeFilter = default(""); // which nodes are considered, matches no nodes by default
+        string nodeFilter = default("*"); // which nodes are considered, matches all nodes by default
         string interfaceFilter = default("*"); // which interfaces are considered, matches all interfaces by default
 
         string content @enum("networkAddress", "macAddress", "info") = default("networkAddress"); // determines what interface data is displayed 

@@ -15,24 +15,25 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "inet/visualizer/common/ModuleFilter.h"
+#include "inet/visualizer/util/InterfaceFilter.h"
 
 namespace inet {
 
 namespace visualizer {
 
-void ModuleFilter::setPattern(const char* pattern)
+void InterfaceFilter::setPattern(const char* pattern)
 {
-    matchExpression.setPattern(pattern, true, true, true);
+    matchExpression.setPattern(pattern, false, true, true);
 }
 
-bool ModuleFilter::matches(const cModule *module) const
+bool InterfaceFilter::matches(const InterfaceEntry *interfaceEntry) const
 {
-    MatchableObject matchableObject(MatchableObject::ATTRIBUTE_FULLPATH, module);
+    MatchableObject matchableObject(MatchableObject::ATTRIBUTE_FULLNAME, interfaceEntry);
     // TODO: eliminate const_cast when cMatchExpression::matches becomes const
-    return const_cast<ModuleFilter *>(this)->matchExpression.matches(&matchableObject);
+    return const_cast<InterfaceFilter *>(this)->matchExpression.matches(&matchableObject);
 }
 
 } // namespace visualizer
 
 } // namespace inet
+

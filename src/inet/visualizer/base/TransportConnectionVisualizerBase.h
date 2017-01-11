@@ -20,7 +20,7 @@
 
 #include "inet/transportlayer/tcp/TCPConnection.h"
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/NetworkNodeFilter.h"
+#include "inet/visualizer/util/NetworkNodeFilter.h"
 
 namespace inet {
 
@@ -46,6 +46,8 @@ class INET_API TransportConnectionVisualizerBase : public VisualizerBase, public
     cModule *subscriptionModule = nullptr;
     NetworkNodeFilter nodeFilter;
     const char *icon = nullptr;
+    cFigure::Font labelFont;
+    cFigure::Color labelColor;
     //@}
 
     std::vector<const TransportConnectionVisualization *> connectionVisualizations;

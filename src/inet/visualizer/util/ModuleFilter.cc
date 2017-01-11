@@ -15,22 +15,22 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "inet/visualizer/common/PacketFilter.h"
+#include "inet/visualizer/util/ModuleFilter.h"
 
 namespace inet {
 
 namespace visualizer {
 
-void PacketFilter::setPattern(const char* pattern)
+void ModuleFilter::setPattern(const char* pattern)
 {
-    matchExpression.setPattern(pattern, false, true, true);
+    matchExpression.setPattern(pattern, true, true, true);
 }
 
-bool PacketFilter::matches(const cPacket *packet) const
+bool ModuleFilter::matches(const cModule *module) const
 {
-    MatchableObject matchableObject(MatchableObject::ATTRIBUTE_FULLNAME, packet);
+    MatchableObject matchableObject(MatchableObject::ATTRIBUTE_FULLPATH, module);
     // TODO: eliminate const_cast when cMatchExpression::matches becomes const
-    return const_cast<PacketFilter *>(this)->matchExpression.matches(&matchableObject);
+    return const_cast<ModuleFilter *>(this)->matchExpression.matches(&matchableObject);
 }
 
 } // namespace visualizer

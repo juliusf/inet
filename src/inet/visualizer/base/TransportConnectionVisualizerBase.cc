@@ -50,6 +50,8 @@ void TransportConnectionVisualizerBase::initialize(int stage)
         subscriptionModule->subscribe(inet::tcp::TCP::tcpConnectionAddedSignal, this);
         nodeFilter.setPattern(par("nodeFilter"));
         icon = par("icon");
+        labelFont = cFigure::parseFont(par("labelFont"));
+        labelColor = cFigure::Color(par("labelColor"));
     }
 }
 

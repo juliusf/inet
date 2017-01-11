@@ -20,7 +20,7 @@
 
 #include "inet/physicallayer/contract/packetlevel/ITracingObstacleLoss.h"
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/AnimationPosition.h"
+#include "inet/visualizer/util/AnimationPosition.h"
 
 namespace inet {
 
@@ -45,15 +45,16 @@ class INET_API TracingObstacleLossVisualizerBase : public VisualizerBase, public
     //@{
     cModule *subscriptionModule = nullptr;
     bool displayIntersection = false;
-    bool displayFaceNormalVector = false;
     cFigure::Color intersectionLineColor;
     cFigure::LineStyle intersectionLineStyle;
     double intersectionLineWidth = NaN;
+    bool displayFaceNormalVector = false;
     cFigure::Color faceNormalLineColor;
     cFigure::LineStyle faceNormalLineStyle;
     double faceNormalLineWidth = NaN;
     const char *fadeOutMode = nullptr;
     double fadeOutTime = NaN;
+    double fadeOutAnimationSpeed = NaN;
     //@}
 
     std::vector<const ObstacleLossVisualization *> obstacleLossVisualizations;

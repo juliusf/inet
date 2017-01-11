@@ -33,7 +33,7 @@ package inet.visualizer.base;
 simple PacketDropVisualizerBase extends VisualizerBase
 {
     parameters:
-        string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for packet drop signals, root module by default
+        string subscriptionModule = default("<root>"); // module where the visualizer subscribes for packet drop signals, root module by default
 
         bool displayPacketDrops = default(false); // display icons for packet drops, disabled by default
 

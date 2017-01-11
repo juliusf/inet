@@ -37,6 +37,13 @@ PacketDropOsgVisualizer::PacketDropOsgVisualization::~PacketDropOsgVisualization
     // TODO: delete node;
 }
 
+void PacketDropOsgVisualizer::refreshDisplay() const
+{
+    PacketDropVisualizerBase::refreshDisplay();
+    // TODO: switch to osg canvas when API is extended
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(packetDropVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
+}
+
 const PacketDropVisualizerBase::PacketDropVisualization *PacketDropOsgVisualizer::createPacketDropVisualization(cModule *module, cPacket *packet) const
 {
     auto path = resolveResourcePath("msg/packet_s.png");

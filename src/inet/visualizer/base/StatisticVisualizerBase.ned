@@ -33,7 +33,7 @@ simple StatisticVisualizerBase extends VisualizerBase
 {
     parameters:
         string networkNodeVisualizerModule = default("^.networkNodeVisualizer"); // module path of the network node visualizer module, refers to a sibling submodule by default
-        string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for the signal, root module by default
+        string subscriptionModule = default("<root>"); // module where the visualizer subscribes for the signal, root module by default
 
         string sourceFilter = default(""); // pattern that must match the signal source, no source filter by default
         string signalName = default(""); // signal name to subscribe, no signal name by default

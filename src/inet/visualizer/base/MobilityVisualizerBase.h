@@ -20,6 +20,7 @@
 
 #include "inet/mobility/contract/IMobility.h"
 #include "inet/visualizer/base/VisualizerBase.h"
+#include "inet/visualizer/util/ModuleFilter.h"
 
 namespace inet {
 
@@ -39,6 +40,8 @@ class INET_API MobilityVisualizerBase : public VisualizerBase, public cListener
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayMovement = false;
+    ModuleFilter moduleFilter;
     // orientation
     bool displayOrientation = false;
     double orientationArcSize = NaN;
@@ -60,6 +63,9 @@ class INET_API MobilityVisualizerBase : public VisualizerBase, public cListener
 
   protected:
     virtual void initialize(int stage) override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
   public:
     virtual ~MobilityVisualizerBase();

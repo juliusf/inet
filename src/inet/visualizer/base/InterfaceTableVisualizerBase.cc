@@ -33,14 +33,8 @@ InterfaceTableVisualizerBase::InterfaceVisualization::InterfaceVisualization(int
 
 InterfaceTableVisualizerBase::~InterfaceTableVisualizerBase()
 {
-    // NOTE: lookup the module again because it may have been deleted first
-    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
-    if (subscriptionModule != nullptr) {
-        subscriptionModule->unsubscribe(NF_INTERFACE_CREATED, this);
-        subscriptionModule->unsubscribe(NF_INTERFACE_DELETED, this);
-        subscriptionModule->unsubscribe(NF_INTERFACE_CONFIG_CHANGED, this);
-        subscriptionModule->unsubscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
-    }
+    if (displayInterfaceTables)
+        unsubscribe();
 }
 
 void InterfaceTableVisualizerBase::initialize(int stage)
@@ -49,10 +43,7 @@ void InterfaceTableVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        subscriptionModule->subscribe(NF_INTERFACE_CREATED, this);
-        subscriptionModule->subscribe(NF_INTERFACE_DELETED, this);
-        subscriptionModule->subscribe(NF_INTERFACE_CONFIG_CHANGED, this);
-        subscriptionModule->subscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
+        displayInterfaceTables = par("displayInterfaceTables");
         nodeFilter.setPattern(par("nodeFilter"));
         interfaceFilter.setPattern(par("interfaceFilter"));
         content = par("content");
@@ -60,6 +51,28 @@ void InterfaceTableVisualizerBase::initialize(int stage)
         textColor = cFigure::parseColor(par("textColor"));
         backgroundColor = cFigure::parseColor(par("backgroundColor"));
         opacity = par("opacity");
+        if (displayInterfaceTables)
+            subscribe();
+    }
+}
+
+void InterfaceTableVisualizerBase::subscribe()
+{
+    subscriptionModule->subscribe(NF_INTERFACE_CREATED, this);
+    subscriptionModule->subscribe(NF_INTERFACE_DELETED, this);
+    subscriptionModule->subscribe(NF_INTERFACE_CONFIG_CHANGED, this);
+    subscriptionModule->subscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
+}
+
+void InterfaceTableVisualizerBase::unsubscribe()
+{
+    // NOTE: lookup the module again because it may have been deleted first
+    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
+    if (subscriptionModule != nullptr) {
+        subscriptionModule->unsubscribe(NF_INTERFACE_CREATED, this);
+        subscriptionModule->unsubscribe(NF_INTERFACE_DELETED, this);
+        subscriptionModule->unsubscribe(NF_INTERFACE_CONFIG_CHANGED, this);
+        subscriptionModule->unsubscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
     }
 }
 

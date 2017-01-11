@@ -62,6 +62,8 @@ LabeledIcon *TransportConnectionCanvasVisualizer::createConnectionEndFigure(tcp:
     labelFigure->setAssociatedObject(tcpConnection);
     labelFigure->setPosition(iconFigure->getBounds().getSize() / 2);
     labelFigure->setAnchor(cFigure::ANCHOR_CENTER);
+    labelFigure->setFont(labelFont);
+    labelFigure->setColor(labelColor);
     char label[32];
     sprintf(label, "%ld", 1 + connectionVisualizations.size() / darkColorsLength);
     labelFigure->setText(label);

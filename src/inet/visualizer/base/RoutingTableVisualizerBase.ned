@@ -32,10 +32,12 @@ package inet.visualizer.base;
 simple RoutingTableVisualizerBase extends VisualizerBase
 {
     parameters:
-        string subscriptionModule = default("<root>"); // module path where the visualizer subscribes for routing table signals, root module by default
+        string subscriptionModule = default("<root>"); // module where the visualizer subscribes for routing table signals, root module by default
+        
+        bool displayRoutingTables = default(false); // display routing table data, disabled by default
 
-        string destinationFilter = default(""); // which destinations are considered, matches no destinations by default
-        string nodeFilter = default("**"); // which nodes are considered, matches all nodes by default
+        string destinationFilter = default("*"); // which destinations are considered, matches no destinations by default
+        string nodeFilter = default("*"); // which nodes are considered, matches all nodes by default
 
         string lineColor = default("black"); // route line color, black by default
         string lineStyle = default("solid"); // route line style (solid, dashed, dotted)

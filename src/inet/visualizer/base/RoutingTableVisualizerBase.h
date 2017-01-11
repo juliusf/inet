@@ -21,8 +21,8 @@
 #include "inet/networklayer/contract/ipv4/IPv4Address.h"
 #include "inet/networklayer/ipv4/IPv4RoutingTable.h"
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/LineManager.h"
-#include "inet/visualizer/common/NetworkNodeFilter.h"
+#include "inet/visualizer/util/LineManager.h"
+#include "inet/visualizer/util/NetworkNodeFilter.h"
 
 namespace inet {
 
@@ -45,6 +45,7 @@ class INET_API RoutingTableVisualizerBase : public VisualizerBase, public cListe
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayRoutingTables = false;
     NetworkNodeFilter destinationFilter;
     NetworkNodeFilter nodeFilter;
     cFigure::Color lineColor;
@@ -62,7 +63,9 @@ class INET_API RoutingTableVisualizerBase : public VisualizerBase, public cListe
 
   protected:
     virtual void initialize(int stage) override;
-    virtual void receiveSignal(cComponent *source, simsignal_t signal, cObject *obj, cObject *details) override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
     virtual const RouteVisualization *createRouteVisualization(IPv4Route *route, cModule *node, cModule *nextHop) const = 0;
     virtual const RouteVisualization *getRouteVisualization(std::pair<int, int> route);
@@ -77,6 +80,8 @@ class INET_API RoutingTableVisualizerBase : public VisualizerBase, public cListe
 
   public:
     virtual ~RoutingTableVisualizerBase();
+
+    virtual void receiveSignal(cComponent *source, simsignal_t signal, cObject *obj, cObject *details) override;
 };
 
 } // namespace visualizer

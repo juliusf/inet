@@ -45,6 +45,13 @@ void TracingObstacleLossOsgVisualizer::initialize(int stage)
     }
 }
 
+void TracingObstacleLossOsgVisualizer::refreshDisplay() const
+{
+    TracingObstacleLossVisualizerBase::refreshDisplay();
+    // TODO: switch to osg canvas when API is extended
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(obstacleLossVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
+}
+
 const TracingObstacleLossVisualizerBase::ObstacleLossVisualization *TracingObstacleLossOsgVisualizer::createObstacleLossVisualization(const IPhysicalObject *object, const Coord& intersection1, const Coord& intersection2, const Coord& normal1, const Coord& normal2) const
 {
     const Rotation rotation(object->getOrientation());

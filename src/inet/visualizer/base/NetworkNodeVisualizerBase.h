@@ -19,7 +19,7 @@
 #define __INET_NETWORKNODEVISUALIZERBASE_H
 
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/NetworkNodeFilter.h"
+#include "inet/visualizer/util/NetworkNodeFilter.h"
 
 namespace inet {
 

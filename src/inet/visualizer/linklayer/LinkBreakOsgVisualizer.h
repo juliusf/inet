@@ -39,6 +39,8 @@ class INET_API LinkBreakOsgVisualizer : public LinkBreakVisualizerBase
     };
 
   protected:
+    virtual void refreshDisplay() const override;
+
     virtual const LinkBreakVisualization *createLinkBreakVisualization(cModule *transmitter, cModule *receiver) const override;
     virtual void addLinkBreakVisualization(const LinkBreakVisualization *linkBreakVisualization) override;
     virtual void removeLinkBreakVisualization(const LinkBreakVisualization *linkBreakVisualization) override;

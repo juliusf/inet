@@ -35,14 +35,8 @@ RoutingTableVisualizerBase::RouteVisualization::RouteVisualization(int nodeModul
 
 RoutingTableVisualizerBase::~RoutingTableVisualizerBase()
 {
-    // NOTE: lookup the module again because it may have been deleted first
-    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
-    if (subscriptionModule != nullptr) {
-        subscriptionModule->unsubscribe(NF_ROUTE_ADDED, this);
-        subscriptionModule->unsubscribe(NF_ROUTE_DELETED, this);
-        subscriptionModule->unsubscribe(NF_ROUTE_CHANGED, this);
-        subscriptionModule->unsubscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
-    }
+    if (displayRoutingTables)
+        unsubscribe();
 }
 
 void RoutingTableVisualizerBase::initialize(int stage)
@@ -51,10 +45,7 @@ void RoutingTableVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        subscriptionModule->subscribe(NF_ROUTE_ADDED, this);
-        subscriptionModule->subscribe(NF_ROUTE_DELETED, this);
-        subscriptionModule->subscribe(NF_ROUTE_CHANGED, this);
-        subscriptionModule->subscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
+        displayRoutingTables = par("displayRoutingTables");
         destinationFilter.setPattern(par("destinationFilter"));
         nodeFilter.setPattern(par("nodeFilter"));
         lineColor = cFigure::Color(par("lineColor"));
@@ -65,6 +56,28 @@ void RoutingTableVisualizerBase::initialize(int stage)
         lineContactSpacing = par("lineContactSpacing");
         lineContactMode = par("lineContactMode");
         lineManager = LineManager::getLineManager(visualizerTargetModule->getCanvas());
+        if (displayRoutingTables)
+            subscribe();
+    }
+}
+
+void RoutingTableVisualizerBase::subscribe()
+{
+    subscriptionModule->subscribe(NF_ROUTE_ADDED, this);
+    subscriptionModule->subscribe(NF_ROUTE_DELETED, this);
+    subscriptionModule->subscribe(NF_ROUTE_CHANGED, this);
+    subscriptionModule->subscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
+}
+
+void RoutingTableVisualizerBase::unsubscribe()
+{
+    // NOTE: lookup the module again because it may have been deleted first
+    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
+    if (subscriptionModule != nullptr) {
+        subscriptionModule->unsubscribe(NF_ROUTE_ADDED, this);
+        subscriptionModule->unsubscribe(NF_ROUTE_DELETED, this);
+        subscriptionModule->unsubscribe(NF_ROUTE_CHANGED, this);
+        subscriptionModule->unsubscribe(NF_INTERFACE_IPv4CONFIG_CHANGED, this);
     }
 }
 

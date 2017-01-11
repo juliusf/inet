@@ -15,7 +15,7 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "inet/visualizer/common/AnimationPosition.h"
+#include "inet/visualizer/util/AnimationPosition.h"
 
 namespace inet {
 

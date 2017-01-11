@@ -20,8 +20,8 @@
 
 #include "inet/networklayer/common/InterfaceEntry.h"
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/InterfaceFilter.h"
-#include "inet/visualizer/common/NetworkNodeFilter.h"
+#include "inet/visualizer/util/InterfaceFilter.h"
+#include "inet/visualizer/util/NetworkNodeFilter.h"
 
 namespace inet {
 

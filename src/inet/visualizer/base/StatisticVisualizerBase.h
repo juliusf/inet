@@ -19,7 +19,7 @@
 #define __INET_STATISTICVISUALIZERBASE_H
 
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/ModuleFilter.h"
+#include "inet/visualizer/util/ModuleFilter.h"
 
 namespace inet {
 

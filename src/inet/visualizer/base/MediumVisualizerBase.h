@@ -20,9 +20,9 @@
 
 #include "inet/physicallayer/contract/packetlevel/IRadioMedium.h"
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/InterfaceFilter.h"
-#include "inet/visualizer/common/NetworkNodeFilter.h"
-#include "inet/visualizer/common/PacketFilter.h"
+#include "inet/visualizer/util/InterfaceFilter.h"
+#include "inet/visualizer/util/NetworkNodeFilter.h"
+#include "inet/visualizer/util/PacketFilter.h"
 
 namespace inet {
 

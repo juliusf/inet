@@ -29,10 +29,8 @@ MobilityVisualizerBase::MobilityVisualization::MobilityVisualization(IMobility *
 
 MobilityVisualizerBase::~MobilityVisualizerBase()
 {
-    // NOTE: lookup the module again because it may have been deleted first
-    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
-    if (subscriptionModule != nullptr)
-        subscriptionModule->unsubscribe(IMobility::mobilityStateChangedSignal, this);
+    if (displayMovement)
+        unsubscribe();
 }
 
 void MobilityVisualizerBase::initialize(int stage)
@@ -41,7 +39,8 @@ void MobilityVisualizerBase::initialize(int stage)
     if (!hasGUI()) return;
     if (stage == INITSTAGE_LOCAL) {
         subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this);
-        subscriptionModule->subscribe(IMobility::mobilityStateChangedSignal, this);
+        displayMovement = par("displayMovement");
+        moduleFilter.setPattern(par("moduleFilter"));
         // orientation
         displayOrientation = par("displayOrientation");
         orientationArcSize = par("orientationArcSize");
@@ -61,7 +60,22 @@ void MobilityVisualizerBase::initialize(int stage)
             movementTrailLineColor = cFigure::parseColor(movementTrailLineColorString);
         movementTrailLineWidth = par("movementTrailLineWidth");
         trailLength = par("trailLength");
+        if (displayMovement)
+            subscribe();
     }
+}
+
+void MobilityVisualizerBase::subscribe()
+{
+    subscriptionModule->subscribe(IMobility::mobilityStateChangedSignal, this);
+}
+
+void MobilityVisualizerBase::unsubscribe()
+{
+    // NOTE: lookup the module again because it may have been deleted first
+    subscriptionModule = getModuleFromPar<cModule>(par("subscriptionModule"), this, false);
+    if (subscriptionModule != nullptr)
+        subscriptionModule->unsubscribe(IMobility::mobilityStateChangedSignal, this);
 }
 
 } // namespace visualizer

@@ -41,6 +41,13 @@ LinkBreakOsgVisualizer::LinkBreakOsgVisualization::~LinkBreakOsgVisualization()
     // TODO: delete node;
 }
 
+void LinkBreakOsgVisualizer::refreshDisplay() const
+{
+    LinkBreakVisualizerBase::refreshDisplay();
+    // TODO: switch to osg canvas when API is extended
+    visualizerTargetModule->getCanvas()->setAnimationSpeed(linkBreakVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
+}
+
 const LinkBreakVisualizerBase::LinkBreakVisualization *LinkBreakOsgVisualizer::createLinkBreakVisualization(cModule *transmitter, cModule *receiver) const
 {
     auto path = resolveResourcePath((std::string(icon) + ".png").c_str());

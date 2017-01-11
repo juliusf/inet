@@ -40,6 +40,8 @@ class INET_API PacketDropOsgVisualizer : public PacketDropVisualizerBase
     };
 
   protected:
+    virtual void refreshDisplay() const override;
+
     virtual const PacketDropVisualization *createPacketDropVisualization(cModule *module, cPacket *packet) const override;
     virtual void addPacketDropVisualization(const PacketDropVisualization *packetDropVisualization) override;
     virtual void removePacketDropVisualization(const PacketDropVisualization *packetDropVisualization) override;

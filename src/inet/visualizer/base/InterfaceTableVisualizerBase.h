@@ -21,8 +21,8 @@
 #include "inet/linklayer/common/MACAddress.h"
 #include "inet/networklayer/common/InterfaceEntry.h"
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/InterfaceFilter.h"
-#include "inet/visualizer/common/NetworkNodeFilter.h"
+#include "inet/visualizer/util/InterfaceFilter.h"
+#include "inet/visualizer/util/NetworkNodeFilter.h"
 
 namespace inet {
 
@@ -45,6 +45,7 @@ class INET_API InterfaceTableVisualizerBase : public VisualizerBase, public cLis
     /** @name Parameters */
     //@{
     cModule *subscriptionModule = nullptr;
+    bool displayInterfaceTables = false;
     NetworkNodeFilter nodeFilter;
     InterfaceFilter interfaceFilter;
     const char *content = nullptr;
@@ -58,6 +59,9 @@ class INET_API InterfaceTableVisualizerBase : public VisualizerBase, public cLis
 
   protected:
     virtual void initialize(int stage) override;
+
+    virtual void subscribe();
+    virtual void unsubscribe();
 
     virtual InterfaceVisualization *createInterfaceVisualization(cModule *networkNode, InterfaceEntry *interfaceEntry) = 0;
     virtual const InterfaceVisualization *getInterfaceVisualization(cModule *networkNode, InterfaceEntry *interfaceEntry);

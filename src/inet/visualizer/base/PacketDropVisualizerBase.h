@@ -19,11 +19,11 @@
 #define __INET_PACKETDROPVISUALIZERBASE_H
 
 #include "inet/visualizer/base/VisualizerBase.h"
-#include "inet/visualizer/common/AnimationPosition.h"
-#include "inet/visualizer/common/InterfaceFilter.h"
-#include "inet/visualizer/common/LineManager.h"
-#include "inet/visualizer/common/NetworkNodeFilter.h"
-#include "inet/visualizer/common/PacketFilter.h"
+#include "inet/visualizer/util/AnimationPosition.h"
+#include "inet/visualizer/util/InterfaceFilter.h"
+#include "inet/visualizer/util/LineManager.h"
+#include "inet/visualizer/util/NetworkNodeFilter.h"
+#include "inet/visualizer/util/PacketFilter.h"
 
 namespace inet {
 
